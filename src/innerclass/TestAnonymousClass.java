@@ -56,6 +56,21 @@ public class TestAnonymousClass {
         };
     }
 
+    private void outFJDK1_8version(int arg1) {
+        InnerClass innerClass = new InnerClass() {
+
+            @Override
+            void innerF() {
+                System.out.println(arg1);
+                System.out.println(privateValue);
+                System.out.println(privateStaticValue);
+                System.out.println(publicValue);
+                System.out.println(publicStaticValue);
+                outF();
+            }
+        };
+    }
+
     private void outF() {
 
     }
