@@ -1,5 +1,11 @@
 package generic;
 
+/**
+ * 泛型类测试代码
+ *
+ * @param <T>
+ * @author lijing
+ */
 public class TestGenericSimple<T> {
     private T data;
 
