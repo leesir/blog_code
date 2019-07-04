@@ -56,7 +56,7 @@ public class TestAnonymousClass {
         };
     }
 
-    private void outFJDK1_8version(int arg1) {
+    private void outFJDK1_8version(final int arg1) {
         InnerClass innerClass = new InnerClass() {
 
             @Override
