@@ -2,7 +2,12 @@ package generic.erasure;
 
 public class GenericAndBridgeTest {
 
-    public class Node<T> {
+    public static void main(String[] args) {
+        MyNode myNode = new MyNode(1);
+        myNode.setData(2);
+    }
+
+    public static class Node<T> {
 
         public T data;
 
@@ -16,7 +21,7 @@ public class GenericAndBridgeTest {
         }
     }
 
-    public class MyNode extends Node<Integer> {
+    public static class MyNode extends Node<Integer> {
         public MyNode(Integer data) {
             super(data);
         }
