@@ -16,6 +16,7 @@ public class GenericWildcardTest {
         System.out.println(sumOfList2(Arrays.asList(1, 2, 2.3)));
         System.out.println(sumOfList2(Arrays.asList(1, 2, 2)));
         System.out.println(sumOfList2(Arrays.asList(1.1, 2.2, 2.3)));
+        visitComparable2(Arrays.asList(1, 0.5));
     }
 
     public static void visitComparable(List<? extends Number> list) {
