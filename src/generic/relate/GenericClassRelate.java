@@ -1,7 +1,8 @@
 package generic.relate;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenericClassRelate {
 
@@ -33,7 +34,21 @@ public class GenericClassRelate {
         Iterable<String> iterable = new ArrayList<>();
     }
 
-    interface PayloadList<E,P> extends List<E> {
+    interface PayloadList<E, P> extends List<E> {
         void setPayload(int index, P val);
+    }
+
+    public static <T extends Number> void generic2(List<T> list) {
+
+    }
+
+    public static void wildcardCovariance() {
+        List<? extends Integer> intList = new ArrayList<>();
+        List<? extends Number> numList = intList;
+    }
+
+    public static void wildcardContravariance() {
+        List<? super Number> numList = new ArrayList<>();
+        List<? super Integer> intList = numList;
     }
 }
