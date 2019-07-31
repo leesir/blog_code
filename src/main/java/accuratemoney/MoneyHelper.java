@@ -33,6 +33,35 @@ public class MoneyHelper {
         }
         System.out.println("total: " + totalInterest2.toString());
         System.out.println();
+        BigDecimal feeA = new BigDecimal("2");
+        BigDecimal feeB = new BigDecimal("3");
+        BigDecimal totalServiceFeeRate = feeA.add(feeB);
+        List<Plan> repayPlanList = new ArrayList<>(investIncomeList2.size());
+        BigDecimal remainPrincipal = new BigDecimal("33000");
+        BigDecimal totalInterest3 = BigDecimal.ZERO;
+        BigDecimal repayMonthTotal = calculateMonthTotal(remainPrincipal, new BigDecimal("15"), 12);
+        for (int index = 0; index < investIncomeList2.size(); index++) {
+            Plan repayPlan = new Plan();
+            repayPlan.setTotal(repayMonthTotal);
+            repayPlan.setPeriod(index + 1);
+            repayPlan.setInterest(investIncomeList.get(index).getInterest().add(investIncomeList2.get(index).getInterest()));
+            repayPlan.setPrincipal(investIncomeList.get(index).getPrincipal().add(investIncomeList2.get(index).getPrincipal()));
+            remainPrincipal = remainPrincipal.subtract(repayPlan.getPrincipal());
+            repayPlan.setOutstanding(remainPrincipal);
+            BigDecimal totalServiceFee = repayMonthTotal.subtract(repayPlan.getInterest().add(repayPlan.getPrincipal())).setScale(2, BigDecimal.ROUND_DOWN);
+            BigDecimal manageFeeA = feeA.divide(totalServiceFeeRate, 2, BigDecimal.ROUND_HALF_UP).multiply(totalServiceFee).setScale(2, BigDecimal.ROUND_DOWN);
+            repayPlan.setManagerFeeA(manageFeeA);
+            totalServiceFee = totalServiceFee.subtract(manageFeeA);
+            repayPlan.setManagerFeeB(totalServiceFee);
+            repayPlanList.add(repayPlan);
+        }
+
+        for (Plan investIncome : repayPlanList) {
+            totalInterest3 = totalInterest3.add(investIncome.getInterest());
+            System.out.println(investIncome.getPeriod() + ": " + investIncome);
+        }
+        System.out.println("total: " + totalInterest3.toString());
+        System.out.println();
     }
 
     /**
@@ -98,7 +127,7 @@ public class MoneyHelper {
      * 等额本息，计算每月应收或者应还总额
      *
      * @param amount 金额基数
-     * @param rate 利率
+     * @param rate   利率
      * @param period 总月数
      */
     public static BigDecimal calculateMonthTotal(BigDecimal amount, BigDecimal rate, int period) {
